@@ -1,6 +1,7 @@
 com\salud\nutricion\repository\RegistroPacientesRepository.class
 com\salud\nutricion\entities\DocumentRegistroPacientes.class
 com\salud\nutricion\service\impl\ResgistroPacientesImplService.class
+com\salud\nutricion\dto\RegistroPacientesDTO.class
 com\salud\nutricion\controller\ResgistroPacientes.class
 com\salud\nutricion\NutricionApplication.class
 com\salud\nutricion\service\RegistroPacientesService.class

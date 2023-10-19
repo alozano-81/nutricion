@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.salud.nutricion.dto.RegistroPacientesDTO;
 import com.salud.nutricion.service.RegistroPacientesService;
 
 @RestController
@@ -17,12 +18,13 @@ public class ResgistroPacientes {
     RegistroPacientesService registroPacientesService;
 
     @GetMapping("/registrar-datos-personales")
-    public ResponseEntity<String> pruebaNavi() {
-
-        registroPacientesService.getTodos("Camilo");
+    public ResponseEntity<RegistroPacientesDTO> pruebaNavi() {
+        RegistroPacientesDTO out = new RegistroPacientesDTO();
+        out = registroPacientesService.getTodos("Camilo");
         System.out.println("llega");
 
-        return new ResponseEntity<>("OKK", HttpStatus.ACCEPTED);
+        // return new ResponseEntity<>("OKK", HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(out, HttpStatus.ACCEPTED);
     }
 
 }

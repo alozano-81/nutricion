@@ -1,9 +1,9 @@
 package com.salud.nutricion.service;
 
-import com.salud.nutricion.entities.DocumentRegistroPacientes;
+import com.salud.nutricion.dto.RegistroPacientesDTO;
 
 public interface RegistroPacientesService {
 
-    public DocumentRegistroPacientes getTodos(String name);
+    public RegistroPacientesDTO getTodos(String name);
 
 }
