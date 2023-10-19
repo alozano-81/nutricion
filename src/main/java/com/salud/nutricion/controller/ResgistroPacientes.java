@@ -1,5 +1,8 @@
 package com.salud.nutricion.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +20,20 @@ public class ResgistroPacientes {
     @Autowired
     RegistroPacientesService registroPacientesService;
 
-    @GetMapping("/registrar-datos-personales")
+    @GetMapping("/get-datos-personales-by-name")
     public ResponseEntity<RegistroPacientesDTO> pruebaNavi() {
         RegistroPacientesDTO out = new RegistroPacientesDTO();
-        out = registroPacientesService.getTodos("Camilo");
+        out = registroPacientesService.getByName("Camilo");
+        System.out.println("llega");
+
+        // return new ResponseEntity<>("OKK", HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(out, HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/get-all-datos-personales")
+    public ResponseEntity<List<RegistroPacientesDTO>> getAll() {
+        List<RegistroPacientesDTO> out = new ArrayList<>();
+        out = registroPacientesService.getAll();
         System.out.println("llega");
 
         // return new ResponseEntity<>("OKK", HttpStatus.ACCEPTED);

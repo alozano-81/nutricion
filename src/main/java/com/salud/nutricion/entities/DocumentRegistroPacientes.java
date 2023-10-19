@@ -1,5 +1,7 @@
 package com.salud.nutricion.entities;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -20,7 +22,7 @@ public class DocumentRegistroPacientes {
 
     private String sexo;
 
-    private String fechaNacimiento;
+    private LocalDateTime fechaNacimiento;
 
     private String estadoCivil;
 

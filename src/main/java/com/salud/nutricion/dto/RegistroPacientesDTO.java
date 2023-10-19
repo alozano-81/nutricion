@@ -1,5 +1,7 @@
 package com.salud.nutricion.dto;
 
+import java.time.LocalDateTime;
+
 import lombok.Data;
 
 @Data
@@ -12,7 +14,7 @@ public class RegistroPacientesDTO {
 
     private String sexo;
 
-    private String fechaNacimiento;
+    private LocalDateTime fechaNacimiento;
 
     private String estadoCivil;
 

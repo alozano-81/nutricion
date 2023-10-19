@@ -1,5 +1,6 @@
 package com.salud.nutricion.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -21,16 +22,27 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
     private ModelMapper modelMapper;
 
     @Override
-    public RegistroPacientesDTO getTodos(String name) {
+    public RegistroPacientesDTO getByName(String name) {
         RegistroPacientesDTO out = new RegistroPacientesDTO();
-        List<DocumentRegistroPacientes> list = documentoRepository.getTodos(name);
-
-        System.out.println("VER: " + list);
+        List<DocumentRegistroPacientes> list = documentoRepository.getByName(name);
 
         for (DocumentRegistroPacientes p : list) {
             out = modelMapper.map(p, RegistroPacientesDTO.class);
         }
         System.out.println("VER2: " + out);
+        return out;
+    }
+
+    @Override
+    public List<RegistroPacientesDTO> getAll() {
+        List<RegistroPacientesDTO> out = new ArrayList<>();
+        List<DocumentRegistroPacientes> list = documentoRepository.getTodos();
+        System.out.println("VER: " + list);
+        for (DocumentRegistroPacientes p : list) {
+            RegistroPacientesDTO rp = new RegistroPacientesDTO();
+            rp = modelMapper.map(p, RegistroPacientesDTO.class);
+            out.add(rp);
+        }
         return out;
     }
 

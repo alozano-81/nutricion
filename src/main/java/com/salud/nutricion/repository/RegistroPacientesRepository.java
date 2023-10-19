@@ -12,6 +12,9 @@ import com.salud.nutricion.entities.DocumentRegistroPacientes;
 public interface RegistroPacientesRepository extends MongoRepository<DocumentRegistroPacientes, String> {
 
     @Query("{nombres:'?0'}")
-    List<DocumentRegistroPacientes> getTodos(String name);
+    List<DocumentRegistroPacientes> getByName(String name);
+
+    @Query(value = "{}")
+    List<DocumentRegistroPacientes> getTodos();
 
 }
