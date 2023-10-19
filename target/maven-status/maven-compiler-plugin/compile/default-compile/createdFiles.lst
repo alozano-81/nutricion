@@ -1,6 +1,6 @@
-com\example\demo\DemoApplication.class
-com\example\demo\entities\DocumentPruebaMDB.class
-com\example\demo\repository\DocumentoRepository.class
-com\example\demo\service\PruebaService.class
-com\example\demo\controller\test.class
-com\example\demo\service\impl\PruebaImplService.class
+com\salud\nutricion\repository\RegistroPacientesRepository.class
+com\salud\nutricion\entities\DocumentRegistroPacientes.class
+com\salud\nutricion\service\impl\ResgistroPacientesImplService.class
+com\salud\nutricion\controller\ResgistroPacientes.class
+com\salud\nutricion\NutricionApplication.class
+com\salud\nutricion\service\RegistroPacientesService.class

@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.salud.nutricion;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -7,13 +7,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
-@ComponentScan({ "com.example.demo.service" })
+@ComponentScan({ "com.salud.nutricion.service" })
 @EnableAutoConfiguration
-@EnableMongoRepositories(basePackages = { "com.example.demo.repository" })
-public class DemoApplication {
+@EnableMongoRepositories(basePackages = { "com.salud.nutricion.repository" })
+public class NutricionApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(NutricionApplication.class, args);
 	}
 
 }
