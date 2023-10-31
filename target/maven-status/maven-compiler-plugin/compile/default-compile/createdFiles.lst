@@ -1,7 +1,14 @@
+com\salud\nutricion\dto\LoginDTO.class
 com\salud\nutricion\repository\RegistroPacientesRepository.class
+com\salud\nutricion\service\LoginService.class
 com\salud\nutricion\entities\DocumentRegistroPacientes.class
-com\salud\nutricion\service\impl\ResgistroPacientesImplService.class
+com\salud\nutricion\controller\LoginControler.class
 com\salud\nutricion\dto\RegistroPacientesDTO.class
 com\salud\nutricion\controller\ResgistroPacientes.class
 com\salud\nutricion\NutricionApplication.class
+com\salud\nutricion\NutricionApplication$1.class
+com\salud\nutricion\service\impl\ResgistroPacientesImplService.class
+com\salud\nutricion\entities\LoginEntitieDocument.class
+com\salud\nutricion\service\impl\LoginImplService.class
+com\salud\nutricion\repository\LoginRepository.class
 com\salud\nutricion\service\RegistroPacientesService.class
