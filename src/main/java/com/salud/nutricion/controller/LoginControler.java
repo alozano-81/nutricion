@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.salud.nutricion.respuestas.Respuesta;
 import com.salud.nutricion.service.LoginService;
 
 @RestController
@@ -19,21 +20,16 @@ public class LoginControler {
     LoginService loginService;
 
     @PostMapping(value = "validar-credenciales", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> validarCredencialesAcceso(
+    public ResponseEntity<Respuesta> validarCredencialesAcceso(
             @RequestParam(value = "usuario", required = false) String usuario,
             @RequestParam(value = "password", required = false) String password) {
-        String out = "";
+        Respuesta out = new Respuesta();
         try {
-            System.out.println("=====>  " + usuario);
             out = loginService.validarCredenciales(usuario, password);
-            System.out.println("===out==>  " + out);
-            if (out.equals("error")) {
-                System.out.println("mostrar error: " + out);
-                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, out);
+            if (!out.getStatus().equals(HttpStatus.ACCEPTED)) {
+                throw new ResponseStatusException(out.getStatus());
             }
-            System.out.println("llega ytr");
-            return new ResponseEntity<>(out, HttpStatus.ACCEPTED);
-
+            return new ResponseEntity<>(out, out.getStatus());
         } catch (Exception e) {
             return new ResponseEntity<>(out, HttpStatus.INTERNAL_SERVER_ERROR);
         }
