@@ -24,7 +24,6 @@ public class LoginImplService implements LoginService {
         Respuesta out = new Respuesta();
         try {
             LoginEntitieDocument obj = loginRepository.getLogin(usuario, password);
-            System.out.println("=====>  " + obj);
             if (obj != null) {
                 LoginDTO objDto = modelMapper.map(obj, LoginDTO.class);
                 // out.setObj(objDto);

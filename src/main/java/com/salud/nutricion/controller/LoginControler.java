@@ -26,12 +26,12 @@ public class LoginControler {
         Respuesta out = new Respuesta();
         try {
             out = loginService.validarCredenciales(usuario, password);
-            if (!out.getStatus().equals(HttpStatus.ACCEPTED)) {
+            if (out.getStatus().equals(HttpStatus.UNAUTHORIZED)) {
                 throw new ResponseStatusException(out.getStatus());
             }
             return new ResponseEntity<>(out, out.getStatus());
         } catch (Exception e) {
-            return new ResponseEntity<>(out, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(out, out.getStatus());
         }
 
     }
