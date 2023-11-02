@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.salud.nutricion.dto.PaisesDTO;
 import com.salud.nutricion.dto.RegistroPacientesDTO;
 import com.salud.nutricion.service.RegistroPacientesService;
 
@@ -34,6 +35,16 @@ public class ResgistroPacientes {
     public ResponseEntity<List<RegistroPacientesDTO>> getAll() {
         List<RegistroPacientesDTO> out = new ArrayList<>();
         out = registroPacientesService.getAll();
+        System.out.println("llega");
+
+        // return new ResponseEntity<>("OKK", HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(out, HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/get-all-paises")
+    public ResponseEntity<List<PaisesDTO>> getAllPaises() {
+        List<PaisesDTO> out = new ArrayList<>();
+        out = registroPacientesService.getAllPaises();
         System.out.println("llega");
 
         // return new ResponseEntity<>("OKK", HttpStatus.ACCEPTED);

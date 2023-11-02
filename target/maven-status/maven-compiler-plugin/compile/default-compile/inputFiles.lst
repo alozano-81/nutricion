@@ -5,9 +5,13 @@ E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricio
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\NutricionApplication.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\service\impl\ResgistroPacientesImplService.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\controller\ResgistroPacientes.java
+E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\respuestas\Respuesta.java
+E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\entities\PaisEntitieDocument.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\service\LoginService.java
+E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\dto\PaisesDTO.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\dto\LoginDTO.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\entities\LoginEntitieDocument.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\repository\RegistroPacientesRepository.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\service\RegistroPacientesService.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\dto\RegistroPacientesDTO.java
+E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\repository\PaisesRepository.java

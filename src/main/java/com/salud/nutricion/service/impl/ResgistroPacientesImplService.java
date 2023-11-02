@@ -7,8 +7,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.salud.nutricion.dto.PaisesDTO;
 import com.salud.nutricion.dto.RegistroPacientesDTO;
 import com.salud.nutricion.entities.DocumentRegistroPacientes;
+import com.salud.nutricion.entities.PaisEntitieDocument;
+import com.salud.nutricion.repository.PaisesRepository;
 import com.salud.nutricion.repository.RegistroPacientesRepository;
 import com.salud.nutricion.service.RegistroPacientesService;
 
@@ -17,6 +20,9 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
 
     @Autowired
     RegistroPacientesRepository documentoRepository;
+
+    @Autowired
+    PaisesRepository paisesRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -41,6 +47,19 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
         for (DocumentRegistroPacientes p : list) {
             RegistroPacientesDTO rp = new RegistroPacientesDTO();
             rp = modelMapper.map(p, RegistroPacientesDTO.class);
+            out.add(rp);
+        }
+        return out;
+    }
+
+    @Override
+    public List<PaisesDTO> getAllPaises() {
+        List<PaisesDTO> out = new ArrayList<>();
+        List<PaisEntitieDocument> list = paisesRepository.getTodos();
+        System.out.println("VER: " + list);
+        for (PaisEntitieDocument p : list) {
+            PaisesDTO rp = new PaisesDTO();
+            rp = modelMapper.map(p, PaisesDTO.class);
             out.add(rp);
         }
         return out;
