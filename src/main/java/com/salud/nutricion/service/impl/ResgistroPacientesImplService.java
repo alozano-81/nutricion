@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.salud.nutricion.dto.PaisesDTO;
@@ -13,6 +14,7 @@ import com.salud.nutricion.entities.DocumentRegistroPacientes;
 import com.salud.nutricion.entities.PaisEntitieDocument;
 import com.salud.nutricion.repository.PaisesRepository;
 import com.salud.nutricion.repository.RegistroPacientesRepository;
+import com.salud.nutricion.respuestas.Respuesta;
 import com.salud.nutricion.service.RegistroPacientesService;
 
 @Service
@@ -62,6 +64,23 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
             rp = modelMapper.map(p, PaisesDTO.class);
             out.add(rp);
         }
+        return out;
+    }
+
+    @Override
+    public Respuesta registrarPacientes(RegistroPacientesDTO formulario) {
+        Respuesta out = new Respuesta();
+        DocumentRegistroPacientes obj = new DocumentRegistroPacientes();
+        obj = modelMapper.map(formulario, DocumentRegistroPacientes.class);
+        DocumentRegistroPacientes respuesta = documentoRepository.save(obj);
+        if (respuesta != null) {
+            out.setStatus(HttpStatus.ACCEPTED);
+            out.setObj(respuesta);
+        } else {
+            out.setStatus(HttpStatus.BAD_REQUEST);
+            out.setObj(respuesta);
+        }
+        System.out.println("ver rrr: " + respuesta);
         return out;
     }
 

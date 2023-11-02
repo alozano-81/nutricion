@@ -7,11 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.salud.nutricion.dto.PaisesDTO;
 import com.salud.nutricion.dto.RegistroPacientesDTO;
+import com.salud.nutricion.respuestas.Respuesta;
 import com.salud.nutricion.service.RegistroPacientesService;
 
 @RestController
@@ -49,6 +53,22 @@ public class ResgistroPacientes {
 
         // return new ResponseEntity<>("OKK", HttpStatus.ACCEPTED);
         return new ResponseEntity<>(out, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping(value = "/registrar")
+    public ResponseEntity<Respuesta> registrarPacientes(@RequestBody RegistroPacientesDTO formularioRegistro) {
+        Respuesta out = new Respuesta();
+        try {
+            System.out.println("ver body" + formularioRegistro);
+            out = registroPacientesService.registrarPacientes(formularioRegistro);
+            if (out.getStatus().equals(HttpStatus.BAD_REQUEST)) {
+                throw new ResponseStatusException(out.getStatus());
+            }
+            return new ResponseEntity<>(out, out.getStatus());
+        } catch (Exception e) {
+            return new ResponseEntity<>(out, out.getStatus());
+        }
+
     }
 
 }

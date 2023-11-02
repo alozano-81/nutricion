@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.salud.nutricion.dto.PaisesDTO;
 import com.salud.nutricion.dto.RegistroPacientesDTO;
+import com.salud.nutricion.respuestas.Respuesta;
 
 public interface RegistroPacientesService {
 
@@ -12,5 +13,7 @@ public interface RegistroPacientesService {
     public List<RegistroPacientesDTO> getAll();
 
     public List<PaisesDTO> getAllPaises();
+
+    public Respuesta registrarPacientes(RegistroPacientesDTO formulario);
 
 }
