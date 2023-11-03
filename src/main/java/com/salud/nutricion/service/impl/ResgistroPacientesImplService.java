@@ -70,17 +70,39 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
     @Override
     public Respuesta registrarPacientes(RegistroPacientesDTO formulario) {
         Respuesta out = new Respuesta();
-        DocumentRegistroPacientes obj = new DocumentRegistroPacientes();
-        obj = modelMapper.map(formulario, DocumentRegistroPacientes.class);
-        DocumentRegistroPacientes respuesta = documentoRepository.save(obj);
-        if (respuesta != null) {
-            out.setStatus(HttpStatus.ACCEPTED);
-            out.setObj(respuesta);
-        } else {
+        try {
+            DocumentRegistroPacientes obj = new DocumentRegistroPacientes();
+            obj = modelMapper.map(formulario, DocumentRegistroPacientes.class);
+
+            DocumentRegistroPacientes buscarUnico = buscarByCedula(obj.getDocumento());
+            if (buscarUnico == null) {
+                DocumentRegistroPacientes respuesta = documentoRepository.save(obj);
+                if (respuesta != null) {
+                    out.setStatus(HttpStatus.ACCEPTED);
+                    out.setObj(respuesta);
+                } else {
+                    out.setStatus(HttpStatus.BAD_REQUEST);
+                    out.setObj(respuesta);
+                }
+
+            } else {
+                out.setStatus(HttpStatus.FOUND);
+                out.setObj(buscarUnico);
+            }
+            System.out.println("ver rrr: " + out);
+        } catch (Exception e) {
             out.setStatus(HttpStatus.BAD_REQUEST);
-            out.setObj(respuesta);
+            out.setObj(formulario);
         }
-        System.out.println("ver rrr: " + respuesta);
+
+        return out;
+    }
+
+    @Override
+    public DocumentRegistroPacientes buscarByCedula(Long id) {
+        DocumentRegistroPacientes out = new DocumentRegistroPacientes();
+        out = documentoRepository.getById(id);
+        System.out.println("Salida: " + out);
         return out;
     }
 

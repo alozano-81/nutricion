@@ -17,4 +17,7 @@ public interface RegistroPacientesRepository extends MongoRepository<DocumentReg
     @Query(value = "{}")
     List<DocumentRegistroPacientes> getTodos();
 
+    @Query("{documento: ?0}")
+    DocumentRegistroPacientes getById(Long id);
+
 }

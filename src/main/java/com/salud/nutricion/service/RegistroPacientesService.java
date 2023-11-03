@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.salud.nutricion.dto.PaisesDTO;
 import com.salud.nutricion.dto.RegistroPacientesDTO;
+import com.salud.nutricion.entities.DocumentRegistroPacientes;
 import com.salud.nutricion.respuestas.Respuesta;
 
 public interface RegistroPacientesService {
@@ -15,5 +16,7 @@ public interface RegistroPacientesService {
     public List<PaisesDTO> getAllPaises();
 
     public Respuesta registrarPacientes(RegistroPacientesDTO formulario);
+
+    public DocumentRegistroPacientes buscarByCedula(Long id);
 
 }
