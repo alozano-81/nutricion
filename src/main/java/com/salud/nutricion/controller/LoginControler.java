@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.xml.bind.DatatypeConverter;
+import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -76,8 +76,11 @@ public class LoginControler {
     }
 
     private Key getSigningKey() {
-        byte[] keyBytes = DatatypeConverter.parseBase64Binary("123");
-        return Keys.hmacShaKeyFor(keyBytes);
+        SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256); // or HS384 or HS512
+        // byte[] keyBytes = DatatypeConverter.parseBase64Binary("123asdfghjk");
+        byte[] bytes = java.util.Base64.getDecoder().decode("123asdfghjk");
+        // return Keys.hmacShaKeyFor(bytes);
+        return key;
     }
 
 }
