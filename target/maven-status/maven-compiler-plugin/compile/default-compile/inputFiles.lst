@@ -4,9 +4,11 @@ E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricio
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\entities\DocumentRegistroPacientes.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\NutricionApplication.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\service\impl\ResgistroPacientesImplService.java
+E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\security\jwt\JWTAuthorizationFilter.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\controller\ResgistroPacientes.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\respuestas\Respuesta.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\entities\PaisEntitieDocument.java
+E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\security\jwt\WebSecurityConfig.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\service\LoginService.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\dto\PaisesDTO.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\dto\LoginDTO.java
