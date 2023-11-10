@@ -2,30 +2,34 @@ package com.salud.nutricion.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.salud.nutricion.dto.UserDTO;
 import com.salud.nutricion.respuestas.Respuesta;
-import com.salud.nutricion.service.LoginService;
+import com.salud.nutricion.service.UserService;
 
 @RestController
-@RequestMapping("/api/auth/login")
-public class LoginControler {
-    @Autowired
-    LoginService loginService;
+@RequestMapping("/api/test")
+public class UserController {
 
-    @PostMapping(value = "/validar-credenciales", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Respuesta> validarCredencialesAcceso(
-            @RequestParam(value = "usuario", required = false) String usuario,
-            @RequestParam(value = "password", required = false) String password) {
+    @Autowired
+    UserService userService;
+
+    @PostMapping("/greetings")
+    public String greetings(@RequestParam(value = "name", defaultValue = "World") String name) {
+        return "Hello {" + name + "}";
+    }
+
+    public ResponseEntity<Respuesta> crearUsuarios(@RequestBody UserDTO body) {
         Respuesta out = new Respuesta();
         try {
-            out = loginService.validarCredenciales(usuario, password);
+            out = userService.crearNuevoUsuario(body);
             if (out.getStatus().equals(HttpStatus.UNAUTHORIZED)) {
                 throw new ResponseStatusException(out.getStatus());
             }

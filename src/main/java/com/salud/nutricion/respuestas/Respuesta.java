@@ -9,4 +9,6 @@ public class Respuesta {
     private Object obj;
     private HttpStatus status;
     private String token;
+    private String msn;
+    private MessageResponse mensaje;
 }
