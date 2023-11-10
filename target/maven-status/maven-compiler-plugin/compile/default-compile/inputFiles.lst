@@ -10,6 +10,7 @@ E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricio
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\controller\UserController.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\respuestas\Respuesta.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\service\LoginService.java
+E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\controller\SecuredController.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\dto\LoginDTO.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\repository\RegistroPacientesRepository.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\service\RegistroPacientesService.java

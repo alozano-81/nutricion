@@ -17,6 +17,7 @@ com\salud\nutricion\dto\LoginDTO.class
 com\salud\nutricion\entities\PaisEntitieDocument.class
 com\salud\nutricion\service\impl\UserImplService.class
 com\salud\nutricion\controller\UserController.class
+com\salud\nutricion\controller\SecuredController.class
 com\salud\nutricion\entities\DocumentRegistroPacientes.class
 com\salud\nutricion\controller\LoginControler.class
 com\salud\nutricion\security\jwt\JWTAuthorizationFilter.class

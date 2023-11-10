@@ -25,38 +25,6 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
-    private final String HEADER = "Authorization";
-    private final String PREFIX = "Bearer ";
-    private final String SECRET = "mySecretKey";
-
-    /*
-     * @Override
-     * protected void doFilterInternal(HttpServletRequest request,
-     * HttpServletResponse response, FilterChain chain)
-     * throws ServletException, IOException {
-     * try {
-     * if (checkJWTToken(request, response)) {
-     * Claims claims = validateToken(request);
-     * if (claims.get("authorities") != null) {
-     * setUpSpringAuthentication(claims);
-     * } else {
-     * SecurityContextHolder.clearContext();
-     * }
-     * } else {
-     * SecurityContextHolder.clearContext();
-     * }
-     * chain.doFilter(request, response);
-     * } catch (ExpiredJwtException | UnsupportedJwtException |
-     * MalformedJwtException e) {
-     * response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-     * ((HttpServletResponse) response).sendError(HttpServletResponse.SC_FORBIDDEN,
-     * e.getMessage());
-     * return;
-     * }
-     * }
-     */
-
-    /// *****************************************prueba */
     private Claims setSigningKey(HttpServletRequest request) {
         String jwtToken = request.getHeader(HEADER_AUTHORIZACION_KEY).replace(TOKEN_BEARER_PREFIX, "");
 
@@ -68,10 +36,14 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     }
 
     private void setAuthentication(Claims claims) {
+
         List<String> authorities = (List<String>) claims.get("authorities");
+
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(claims.getSubject(), null,
                 authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
+
         SecurityContextHolder.getContext().setAuthentication(auth);
+
     }
 
     private boolean isJWTValid(HttpServletRequest request, HttpServletResponse res) {
@@ -101,49 +73,6 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
             return;
         }
-    }
-
-    /// **********************FIN*******************prueba */
-
-    private Claims validateToken(HttpServletRequest request) {
-        String jwtToken = request.getHeader(HEADER).replace(PREFIX, "");
-        // return
-        // Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(jwtToken).getBody();
-
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey(SECRET))
-                .build()
-                .parseClaimsJws(jwtToken)
-                .getBody();
-    }
-
-    /*
-     * public static Key getSigningKey(String secret) {
-     * byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
-     * return Keys.hmacShaKeyFor(keyBytes);
-     * }
-     */
-
-    /**
-     * Authentication method in Spring flow
-     * 
-     * @param claims
-     */
-    private void setUpSpringAuthentication(Claims claims) {
-        @SuppressWarnings("unchecked")
-        List<String> authorities = (List<String>) claims.get("authorities");
-
-        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(claims.getSubject(), null,
-                authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
-        SecurityContextHolder.getContext().setAuthentication(auth);
-
-    }
-
-    private boolean checkJWTToken(HttpServletRequest request, HttpServletResponse res) {
-        String authenticationHeader = request.getHeader(HEADER);
-        if (authenticationHeader == null || !authenticationHeader.startsWith(PREFIX))
-            return false;
-        return true;
     }
 
 }

@@ -14,7 +14,7 @@ import com.salud.nutricion.respuestas.Respuesta;
 import com.salud.nutricion.service.LoginService;
 
 @RestController
-@RequestMapping("/api/auth/login")
+@RequestMapping("/login")
 public class LoginControler {
     @Autowired
     LoginService loginService;
