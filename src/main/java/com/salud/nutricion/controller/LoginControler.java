@@ -1,5 +1,7 @@
 package com.salud.nutricion.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,29 +13,54 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.salud.nutricion.respuestas.Respuesta;
+import com.salud.nutricion.security.jwt.JWTAuthorizationFilter;
 import com.salud.nutricion.service.LoginService;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/api/test")
 public class LoginControler {
     @Autowired
     LoginService loginService;
+
+    @Autowired
+    private JWTAuthorizationFilter jwtUtil;
 
     @PostMapping(value = "/validar-credenciales", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Respuesta> validarCredencialesAcceso(
             @RequestParam(value = "usuario", required = false) String usuario,
             @RequestParam(value = "password", required = false) String password) {
         Respuesta out = new Respuesta();
+        Date x = new Date(System.currentTimeMillis() + (60000 * 1));
+        System.out.println("FEcha: " + x);
         try {
             out = loginService.validarCredenciales(usuario, password);
+
+            procesarToken(out.getToken());
+
             if (out.getStatus().equals(HttpStatus.UNAUTHORIZED)) {
                 throw new ResponseStatusException(out.getStatus());
             }
             return new ResponseEntity<>(out, out.getStatus());
         } catch (Exception e) {
-            return new ResponseEntity<>(out, out.getStatus());
+            return new ResponseEntity<>(out, HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    public void procesarToken(String jwtToken) {
+
+        // Claims claims = jwtUtil.extractClaims(jwtToken);
+
+        // Extraer valores específicos del token
+        String username = jwtUtil.extractUsername(jwtToken);
+        // List<String> roles = claims.get("ROLE_USER", List.class); // Suponiendo que
+        // "roles" es un claim personalizado
+
+        // Realizar las operaciones necesarias con los valores extraídos
+        System.out.println("Username: " + username);
+        // System.out.println("Roles: " + roles);
+
+        // Resto de la lógica...
     }
 
 }

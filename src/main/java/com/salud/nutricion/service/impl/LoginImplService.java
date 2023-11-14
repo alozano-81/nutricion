@@ -40,6 +40,7 @@ public class LoginImplService implements LoginService {
     @Override
     public Respuesta validarCredenciales(String usuario, String password) {
         Respuesta out = new Respuesta();
+
         try {
             LoginEntitieDocument obj = loginRepository.getLogin(usuario, password);
             if (obj != null) {
@@ -52,6 +53,7 @@ public class LoginImplService implements LoginService {
                 out.setStatus(HttpStatus.UNAUTHORIZED);
             }
         } catch (Exception e) {
+            System.out.println("VER MSN ERROR: " + e.getMessage());
             out.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return out;

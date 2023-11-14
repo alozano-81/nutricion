@@ -16,6 +16,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -73,6 +74,37 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
             return;
         }
+    }
+
+    public Claims extractClaims(String token) {
+
+        try {
+            // Parsear el token y obtener los claims
+            Claims claims = Jwts.parser()
+                    .setSigningKey(SUPER_SECRET_KEY)
+                    .parseClaimsJws(token.trim())
+                    .getBody();
+
+            // Obtener los valores del token
+            String username = claims.getSubject();
+            String userId = claims.get("userId", String.class);
+            // Puedes agregar más según los claims que hayas incluido en el token
+
+            // Imprimir los valores
+            System.out.println("Username: " + username);
+            System.out.println("UserID: " + userId);
+        } catch (SignatureException e) {
+            // Excepción lanzada si la firma del token no es válida
+            System.err.println("Error de firma del token: " + e.getMessage());
+        } catch (Exception e) {
+            // Otras excepciones, por ejemplo, si el token está mal formado
+            System.err.println("Error al parsear el token: " + e.getMessage());
+        }
+        return Jwts.parser().setSigningKey(SUPER_SECRET_KEY).parseClaimsJws(token).getBody();
+    }
+
+    public String extractUsername(String token) {
+        return extractClaims(token).getSubject();
     }
 
 }

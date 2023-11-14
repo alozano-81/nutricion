@@ -15,13 +15,13 @@ import com.salud.nutricion.respuestas.Respuesta;
 import com.salud.nutricion.service.UserService;
 
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/api/auth/")
 public class UserController {
 
     @Autowired
     UserService userService;
 
-    @GetMapping("/greetings")
+    @GetMapping("greetings")
     public String greetings(@RequestParam(value = "name", defaultValue = "World") String name) {
         System.out.println("llega");
         return "Hello {" + name + "}";

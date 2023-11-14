@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.salud.nutricion.service.UserService;
 
 @RestController
-@RequestMapping("test")
+@RequestMapping("/api/test")
 public class SecuredController {
 
 	@Autowired

@@ -16,7 +16,7 @@ public class Constans {
     // JWT
     public static final String ISSUER_INFO = "https://www.autentia.com/";
     public static final String SUPER_SECRET_KEY = "ZnJhc2VzbGFyZ2FzcGFyYWNvbG9jYXJjb21vY2xhdmVlbnVucHJvamVjdG9kZWVtZXBsb3BhcmFqd3Rjb25zcHJpbmdzZWN1cml0eQ==bWlwcnVlYmFkZWVqbXBsb3BhcmFiYXNlNjQ=";
-    public static final long TOKEN_EXPIRATION_TIME = 3600; // 10 day
+    public static final long TOKEN_EXPIRATION_TIME = 60000; // 10 day
 
     public static Key getSigningKeyB64(String secret) {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
