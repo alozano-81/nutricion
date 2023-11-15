@@ -19,7 +19,7 @@ import com.salud.nutricion.respuestas.Respuesta;
 import com.salud.nutricion.service.RegistroPacientesService;
 
 @RestController
-@RequestMapping("api/paciente")
+@RequestMapping("api/auth/paciente")
 public class ResgistroPacientes {
 
     @Autowired

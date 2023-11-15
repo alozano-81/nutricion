@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +17,7 @@ import com.salud.nutricion.security.jwt.JWTAuthorizationFilter;
 import com.salud.nutricion.service.UserService;
 
 @RestController
-@RequestMapping("/api/auth/")
+@RequestMapping("/api/auth/usersesion/")
 public class UserController {
 
     @Autowired
@@ -25,13 +26,30 @@ public class UserController {
     @Autowired
     private JWTAuthorizationFilter jwtUtil;
 
-    @GetMapping("greetings")
+    @GetMapping("validar-sesion-test")
     public ResponseEntity<Respuesta> greetings(@RequestParam(value = "name", defaultValue = "World") String name,
             @RequestParam(value = "token") String token) {
         System.out.println("llega");
         Respuesta out = new Respuesta();
         try {
-            out = procesarToken(token);
+            out = jwtUtil.procesarToken(token);
+            if (out.getStatus().equals(HttpStatus.UNAUTHORIZED)) {
+                throw new ResponseStatusException(out.getStatus());
+            }
+            return new ResponseEntity<>(out, out.getStatus());
+        } catch (Exception e) {
+            System.out.println("VER ex general: " + e.getMessage());
+            out.setStatus(HttpStatus.FOUND);
+            return new ResponseEntity<>(out, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("validar-sesion")
+    public ResponseEntity<Respuesta> validarSesion(@RequestHeader(value = "token", required = true) String token) {
+        System.out.println("llegaunt:" + token.substring(7));
+        Respuesta out = new Respuesta();
+        try {
+            out = jwtUtil.procesarToken(token.contains("Bearer ") ? token.substring(7) : token);
             if (out.getStatus().equals(HttpStatus.UNAUTHORIZED)) {
                 throw new ResponseStatusException(out.getStatus());
             }
@@ -55,18 +73,6 @@ public class UserController {
             return new ResponseEntity<>(out, out.getStatus());
         }
 
-    }
-
-    public Respuesta procesarToken(String jwtToken) {
-        Respuesta out = new Respuesta();
-
-        out = jwtUtil.extractClaims(jwtToken);
-        System.out.println("Cl1: " + out.getClains());
-        // Extraer valores específicos del token
-        // String username = jwtUtil.extractUsername(jwtToken);
-        // List<String> roles = claims.get("ROLE_USER", List.class); // Suponiendo que
-        // "roles" es un claim personalizado
-        return out;
     }
 
 }

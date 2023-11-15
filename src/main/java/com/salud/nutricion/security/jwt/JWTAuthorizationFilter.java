@@ -124,6 +124,18 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
         // Jwts.parser().setSigningKey(SUPER_SECRET_KEY).parseClaimsJws(token).getBody();
     }
 
+    public Respuesta procesarToken(String jwtToken) {
+        Respuesta out = new Respuesta();
+
+        out = extractClaims(jwtToken);
+        System.out.println("Cl1: " + out.getClains());
+        // Extraer valores específicos del token
+        // String username = jwtUtil.extractUsername(jwtToken);
+        // List<String> roles = claims.get("ROLE_USER", List.class); // Suponiendo que
+        // "roles" es un claim personalizado
+        return out;
+    }
+
     /*
      * public String extractUsername(String token) {
      * return extractClaims(token).getSubject();
