@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.salud.nutricion.respuestas.Respuesta;
-import com.salud.nutricion.security.jwt.JWTAuthorizationFilter;
 import com.salud.nutricion.service.LoginService;
 
 @RestController
@@ -21,9 +20,6 @@ import com.salud.nutricion.service.LoginService;
 public class LoginControler {
     @Autowired
     LoginService loginService;
-
-    @Autowired
-    private JWTAuthorizationFilter jwtUtil;
 
     @PostMapping(value = "/validar-credenciales", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Respuesta> validarCredencialesAcceso(
@@ -35,8 +31,6 @@ public class LoginControler {
         try {
             out = loginService.validarCredenciales(usuario, password);
 
-            procesarToken(out.getToken());
-
             if (out.getStatus().equals(HttpStatus.UNAUTHORIZED)) {
                 throw new ResponseStatusException(out.getStatus());
             }
@@ -47,20 +41,6 @@ public class LoginControler {
 
     }
 
-    public void procesarToken(String jwtToken) {
-
-        // Claims claims = jwtUtil.extractClaims(jwtToken);
-
-        // Extraer valores específicos del token
-        String username = jwtUtil.extractUsername(jwtToken);
-        // List<String> roles = claims.get("ROLE_USER", List.class); // Suponiendo que
-        // "roles" es un claim personalizado
-
-        // Realizar las operaciones necesarias con los valores extraídos
-        System.out.println("Username: " + username);
-        // System.out.println("Roles: " + roles);
-
-        // Resto de la lógica...
-    }
+  
 
 }

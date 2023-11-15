@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.salud.nutricion.dto.UserDTO;
 import com.salud.nutricion.respuestas.Respuesta;
+import com.salud.nutricion.security.jwt.JWTAuthorizationFilter;
 import com.salud.nutricion.service.UserService;
 
 @RestController
@@ -21,10 +22,25 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    private JWTAuthorizationFilter jwtUtil;
+
     @GetMapping("greetings")
-    public String greetings(@RequestParam(value = "name", defaultValue = "World") String name) {
+    public ResponseEntity<Respuesta> greetings(@RequestParam(value = "name", defaultValue = "World") String name,
+            @RequestParam(value = "token") String token) {
         System.out.println("llega");
-        return "Hello {" + name + "}";
+        Respuesta out = new Respuesta();
+        try {
+            out = procesarToken(token);
+            if (out.getStatus().equals(HttpStatus.UNAUTHORIZED)) {
+                throw new ResponseStatusException(out.getStatus());
+            }
+            return new ResponseEntity<>(out, out.getStatus());
+        } catch (Exception e) {
+            System.out.println("VER ex general: " + e.getMessage());
+            out.setStatus(HttpStatus.FOUND);
+            return new ResponseEntity<>(out, HttpStatus.BAD_REQUEST);
+        }
     }
 
     public ResponseEntity<Respuesta> crearUsuarios(@RequestBody UserDTO body) {
@@ -39,6 +55,18 @@ public class UserController {
             return new ResponseEntity<>(out, out.getStatus());
         }
 
+    }
+
+    public Respuesta procesarToken(String jwtToken) {
+        Respuesta out = new Respuesta();
+
+        out = jwtUtil.extractClaims(jwtToken);
+        System.out.println("Cl1: " + out.getClains());
+        // Extraer valores específicos del token
+        // String username = jwtUtil.extractUsername(jwtToken);
+        // List<String> roles = claims.get("ROLE_USER", List.class); // Suponiendo que
+        // "roles" es un claim personalizado
+        return out;
     }
 
 }
