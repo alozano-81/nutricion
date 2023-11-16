@@ -1,18 +1,12 @@
 package com.salud.nutricion.service.impl;
 
-import java.security.Key;
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.crypto.SecretKey;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +18,10 @@ import com.salud.nutricion.respuestas.Respuesta;
 import com.salud.nutricion.security.jwt.JWTAuthtenticationConfig;
 import com.salud.nutricion.service.LoginService;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
-
 @Service
 public class LoginImplService implements LoginService {
+
+    private static final Logger logger = LoggerFactory.getLogger(LoginImplService.class);
 
     @Autowired
     JWTAuthtenticationConfig jwtAuthtenticationConfig;
@@ -74,42 +66,10 @@ public class LoginImplService implements LoginService {
             }
 
         } catch (Exception e) {
-            System.out.println("VER MSN ERROR: " + e.getMessage());
+            logger.error("VER MSN ERROR: ", e.getMessage());
             out.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return out;
-    }
-
-    private String getJWTToken(String username) {
-        String secretKey = "mySecretKey";
-        List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-                .commaSeparatedStringToAuthorityList("ROLE_USER");
-
-        String token = Jwts
-                .builder()
-                .setId("softtekJWT")
-                .setSubject(username)
-                .claim("authorities",
-                        grantedAuthorities.stream()
-                                .map(GrantedAuthority::getAuthority)
-                                .collect(Collectors.toList()))
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 600000))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
-                // .signWith(SignatureAlgorithm.HS512,
-                // Base64.getEncoder().encodeToString("bad-key".getBytes(US_ASCII)))
-
-                .compact();
-
-        return "Bearer " + token;
-    }
-
-    private Key getSigningKey() {
-        SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256); // or HS384 or HS512
-        // byte[] keyBytes = DatatypeConverter.parseBase64Binary("123asdfghjk");
-        byte[] bytes = java.util.Base64.getDecoder().decode("mySecretKey");
-        // return Keys.hmacShaKeyFor(bytes);
-        return key;
     }
 
 }

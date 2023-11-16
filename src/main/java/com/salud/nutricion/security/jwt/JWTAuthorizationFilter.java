@@ -35,7 +35,6 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     private Claims setSigningKey(HttpServletRequest request) {
         String jwtToken = request.getHeader(HEADER_AUTHORIZACION_KEY).replace(TOKEN_BEARER_PREFIX, "");
-
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey(SUPER_SECRET_KEY))
                 .build()
@@ -44,14 +43,10 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     }
 
     private void setAuthentication(Claims claims) {
-
         List<String> authorities = (List<String>) claims.get("authorities");
-
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(claims.getSubject(), null,
                 authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
-
         SecurityContextHolder.getContext().setAuthentication(auth);
-
     }
 
     private boolean isJWTValid(HttpServletRequest request, HttpServletResponse res) {
@@ -80,45 +75,45 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             logger.error("Invalid JWT token invalido: {}", e.getMessage());
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             response.sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
-            return;
+            // return;
         }
     }
 
+    /**
+     * Valida el token en sesion
+     * 
+     * @param token
+     * @return
+     * @throws ExpiredJwtException
+     * @throws UnsupportedJwtException
+     * @throws IllegalArgumentException
+     */
     public Respuesta extractClaims(String token)
             throws ExpiredJwtException, UnsupportedJwtException, IllegalArgumentException {
-
         Respuesta out = new Respuesta();
         Claims claims = null;
-
         try {
             // Parsear el token y obtener los claims
-
             claims = Jwts.parser()
                     .setSigningKey(SUPER_SECRET_KEY.getBytes())
                     .parseClaimsJws(token.trim())
                     .getBody();
-
             // Obtener los valores del token
             String username = claims.getSubject();
-            System.out.println("Cl: " + claims);
             String userId = claims.getId();
             // Puedes agregar más según los claims que hayas incluido en el token
-
             // Imprimir los valores
-            System.out.println("Username: " + username);
-            System.out.println("UserID: " + userId);
             out.setStatus(HttpStatus.ACCEPTED);
         } catch (MalformedJwtException e) {
             logger.error("Invalid JWT token: {}", e.getMessage());
         } catch (SignatureException e) {
             // Excepción lanzada si la firma del token no es válida
-            System.err.println("Error de firma del token: " + e.getMessage());
+            logger.error("Error de firma del token:", e.getMessage());
         } catch (Exception e) {
             // Otras excepciones, por ejemplo, si el token está mal formado
+            logger.error("Error al parsear el token: ", e.getMessage());
             out.setMsn(e.getMessage());
-            System.err.println("Error al parsear el token: " + e.getMessage());
         }
-
         out.setClains(claims);
         return out;
         // Jwts.parser().setSigningKey(SUPER_SECRET_KEY).parseClaimsJws(token).getBody();
@@ -126,9 +121,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     public Respuesta procesarToken(String jwtToken) {
         Respuesta out = new Respuesta();
-
         out = extractClaims(jwtToken);
-        System.out.println("Cl1: " + out.getClains());
         // Extraer valores específicos del token
         // String username = jwtUtil.extractUsername(jwtToken);
         // List<String> roles = claims.get("ROLE_USER", List.class); // Suponiendo que

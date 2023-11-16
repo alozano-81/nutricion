@@ -19,7 +19,6 @@ public class JWTAuthtenticationConfig {
         public String getJWTToken(String username, String rolAuth) {
                 List<GrantedAuthority> grantedAuthorities = AuthorityUtils
                                 .commaSeparatedStringToAuthorityList(rolAuth);
-
                 String token = Jwts
                                 .builder()
                                 .setId("nutricionSign")
@@ -31,7 +30,6 @@ public class JWTAuthtenticationConfig {
                                 .setIssuedAt(new Date(System.currentTimeMillis()))
                                 .setExpiration(new Date(System.currentTimeMillis() + (1 * TOKEN_EXPIRATION_TIME)))
                                 .signWith(getSigningKey(SUPER_SECRET_KEY), SignatureAlgorithm.HS512).compact();
-
                 return "Bearer " + token;
         }
 

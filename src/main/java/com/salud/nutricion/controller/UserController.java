@@ -30,7 +30,6 @@ public class UserController {
     @GetMapping("validar-sesion-test")
     public ResponseEntity<Respuesta> greetings(@RequestParam(value = "name", defaultValue = "World") String name,
             @RequestParam(value = "token") String token) {
-        System.out.println("llega");
         Respuesta out = new Respuesta();
         try {
             out = jwtUtil.procesarToken(token);
@@ -47,7 +46,6 @@ public class UserController {
 
     @GetMapping("validar-sesion")
     public ResponseEntity<Respuesta> validarSesion(@RequestHeader(value = "token", required = true) String token) {
-        System.out.println("llegaunt:" + token.substring(7));
         Respuesta out = new Respuesta();
         try {
             out = jwtUtil.procesarToken(token.contains("Bearer ") ? token.substring(7) : token);
