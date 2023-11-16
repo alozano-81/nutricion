@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.salud.nutricion.dto.UserDTO;
@@ -25,20 +27,28 @@ public class UserImplService implements UserService {
     @Autowired
     RoleRepository roleRepository;
 
-    // @Autowired
-    // PasswordEncoder encoder;
+    @Autowired
+    PasswordEncoder encoder;
 
     @Override
     public Respuesta crearNuevoUsuario(UserDTO body) {
         Respuesta obj = new Respuesta();
+        System.out.println("BODY: " + body);
+
+        if (userRepository.existsByUsernameAndPassword(body.getUsername(), body.getPassword())) {
+            obj.setMensaje(new MessageResponse("Error: Usuario y password existente!"));
+            obj.setStatus(HttpStatus.FOUND);
+        }
 
         if (userRepository.existsByUsername(body.getUsername())) {
-            obj.setMensaje(new MessageResponse("Error: Email is already in use!"));
+            obj.setMensaje(new MessageResponse("Error: Usuario existente!"));
+            obj.setStatus(HttpStatus.FOUND);
             return obj;
         }
 
         if (userRepository.existsByEmail(body.getEmail())) {
-            obj.setMensaje(new MessageResponse("Error: Email is already in use!"));
+            obj.setMensaje(new MessageResponse("Error: Email existente!"));
+            obj.setStatus(HttpStatus.FOUND);
             return obj;
         }
 
@@ -46,7 +56,7 @@ public class UserImplService implements UserService {
         UserEntitieDocument user = new UserEntitieDocument();
         user.setUsername(body.getUsername());
         user.setEmail(body.getEmail());
-        // user.setPassword(encoder.encode(body.getPassword()));
+        user.setPassword(encoder.encode(body.getPassword()));
 
         Set<String> strRoles = body.getRoless();
         Set<RoleEntitieDocument> roles = new HashSet<>();
@@ -80,6 +90,7 @@ public class UserImplService implements UserService {
 
         user.setIdRol(roles);
         userRepository.save(user);
+        obj.setStatus(HttpStatus.ACCEPTED);
         return obj;
     }
 
