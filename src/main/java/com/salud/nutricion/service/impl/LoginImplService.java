@@ -50,20 +50,27 @@ public class LoginImplService implements LoginService {
     public Respuesta validarCredenciales(String usuario, String password) {
         Respuesta out = new Respuesta();
         try {
-
             Optional<UserEntitieDocument> pasEncode = userRepository.findByUsername(usuario);
-
-            if (pasEncode.isPresent() && encoder.matches(password, pasEncode.get().getPassword())) {
-                UserEntitieDocument obj = userRepository.getLogin(usuario, pasEncode.get().getPassword());
-                if (obj != null) {
-                    UserDTO objDto = modelMapper.map(obj, UserDTO.class);
-                    // out.setObj(objDto);
-                    String token = jwtAuthtenticationConfig.getJWTToken(usuario);
-                    out.setToken(token);
-                    out.setStatus(HttpStatus.ACCEPTED);
+            if (pasEncode.isPresent()) {
+                if (encoder.matches(password, pasEncode.get().getPassword())) {
+                    UserEntitieDocument obj = userRepository.getLogin(usuario, pasEncode.get().getPassword());
+                    if (obj != null) {
+                        UserDTO objDto = modelMapper.map(obj, UserDTO.class);
+                        out.setObj(objDto.getIdRol());
+                        String token = jwtAuthtenticationConfig.getJWTToken(usuario,
+                                pasEncode.get().getIdRol().iterator().next().getNombre());
+                        out.setToken(token);
+                        out.setStatus(HttpStatus.ACCEPTED);
+                    } else {
+                        out.setStatus(HttpStatus.UNAUTHORIZED);
+                    }
                 } else {
-                    out.setStatus(HttpStatus.UNAUTHORIZED);
+                    out.setStatus(HttpStatus.CONFLICT);
+                    out.setMsn("La contraseña no es valida");
                 }
+            } else {
+                out.setStatus(HttpStatus.CONFLICT);
+                out.setMsn("Usuario no es correcto");
             }
 
         } catch (Exception e) {

@@ -16,9 +16,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Configuration
 public class JWTAuthtenticationConfig {
 
-        public String getJWTToken(String username) {
+        public String getJWTToken(String username, String rolAuth) {
                 List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-                                .commaSeparatedStringToAuthorityList("ROLE_USER");
+                                .commaSeparatedStringToAuthorityList(rolAuth);
 
                 String token = Jwts
                                 .builder()

@@ -5,6 +5,8 @@ import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 
+import com.salud.nutricion.entities.RoleEntitieDocument;
+
 import lombok.Data;
 
 @Data
@@ -19,5 +21,6 @@ public class UserDTO {
     private String type = "Bearer";
     private String id;
     private Set<String> roless;
+    Set<RoleEntitieDocument> idRol;
     List<String> roles;
 }
