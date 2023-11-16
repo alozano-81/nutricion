@@ -26,6 +26,9 @@ public class JWTAuthtenticationConfig {
         @Value("${nutricion.add.authorities}")
         private String authorities;
 
+        @Value("${nutricion.add.tiempoTTLsesion}")
+        private int ttl;
+
         public String getJWTToken(String username, String rolAuth) {
                 List<GrantedAuthority> grantedAuthorities = AuthorityUtils
                                 .commaSeparatedStringToAuthorityList(rolAuth);
@@ -38,7 +41,7 @@ public class JWTAuthtenticationConfig {
                                                                 .map(GrantedAuthority::getAuthority)
                                                                 .collect(Collectors.toList()))
                                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                                .setExpiration(new Date(System.currentTimeMillis() + (1 * TOKEN_EXPIRATION_TIME)))
+                                .setExpiration(new Date(System.currentTimeMillis() + (ttl * TOKEN_EXPIRATION_TIME)))
                                 .signWith(getSigningKey(jwtSecret), SignatureAlgorithm.HS512).compact();
                 return TOKEN_BEARER_PREFIX + token;
         }
