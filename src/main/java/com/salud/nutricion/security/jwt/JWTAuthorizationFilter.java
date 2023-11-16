@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,12 +32,18 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
+    @Value("${nutricion.add.jwtSecret}")
+    private String jwtSecret;
+
+    @Value("${nutricion.add.authorities}")
+    private String authorities;
+
     private static final Logger logger = LoggerFactory.getLogger(JWTAuthorizationFilter.class);
 
     private Claims setSigningKey(HttpServletRequest request) {
         String jwtToken = request.getHeader(HEADER_AUTHORIZACION_KEY).replace(TOKEN_BEARER_PREFIX, "");
         return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey(SUPER_SECRET_KEY))
+                .setSigningKey(getSigningKey(jwtSecret))
                 .build()
                 .parseClaimsJws(jwtToken)
                 .getBody();
@@ -62,7 +69,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
         try {
             if (isJWTValid(request, response)) {
                 Claims claims = setSigningKey(request);
-                if (claims.get("authorities") != null) {
+                if (claims.get(authorities) != null) {
                     setAuthentication(claims);
                 } else {
                     SecurityContextHolder.clearContext();
@@ -95,28 +102,28 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
         try {
             // Parsear el token y obtener los claims
             claims = Jwts.parser()
-                    .setSigningKey(SUPER_SECRET_KEY.getBytes())
+                    .setSigningKey(jwtSecret.getBytes())
                     .parseClaimsJws(token.trim())
                     .getBody();
-            // Obtener los valores del token
-            String username = claims.getSubject();
-            String userId = claims.getId();
-            // Puedes agregar más según los claims que hayas incluido en el token
-            // Imprimir los valores
             out.setStatus(HttpStatus.ACCEPTED);
         } catch (MalformedJwtException e) {
             logger.error("Invalid JWT token: {}", e.getMessage());
+            out.setStatus(HttpStatus.CONFLICT);
+            out.setMsn("Invalid JWT token:" + e.getMessage());
         } catch (SignatureException e) {
             // Excepción lanzada si la firma del token no es válida
             logger.error("Error de firma del token:", e.getMessage());
+            out.setStatus(HttpStatus.CONFLICT);
+            out.setMsn("Error de firma del token:" + e.getMessage());
         } catch (Exception e) {
             // Otras excepciones, por ejemplo, si el token está mal formado
             logger.error("Error al parsear el token: ", e.getMessage());
+            out.setStatus(HttpStatus.CONFLICT);
             out.setMsn(e.getMessage());
         }
         out.setClains(claims);
         return out;
-        // Jwts.parser().setSigningKey(SUPER_SECRET_KEY).parseClaimsJws(token).getBody();
+        // Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
     }
 
     public Respuesta procesarToken(String jwtToken) {

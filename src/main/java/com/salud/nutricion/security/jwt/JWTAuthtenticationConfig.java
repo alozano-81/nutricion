@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -16,21 +17,30 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Configuration
 public class JWTAuthtenticationConfig {
 
+        @Value("${nutricion.add.jwtSecret}")
+        private String jwtSecret;
+
+        @Value("${nutricion.add.firmaJwt}")
+        private String firmaJwt;
+
+        @Value("${nutricion.add.authorities}")
+        private String authorities;
+
         public String getJWTToken(String username, String rolAuth) {
                 List<GrantedAuthority> grantedAuthorities = AuthorityUtils
                                 .commaSeparatedStringToAuthorityList(rolAuth);
                 String token = Jwts
                                 .builder()
-                                .setId("nutricionSign")
+                                .setId(firmaJwt)
                                 .setSubject(username)
-                                .claim("authorities",
+                                .claim(authorities,
                                                 grantedAuthorities.stream()
                                                                 .map(GrantedAuthority::getAuthority)
                                                                 .collect(Collectors.toList()))
                                 .setIssuedAt(new Date(System.currentTimeMillis()))
                                 .setExpiration(new Date(System.currentTimeMillis() + (1 * TOKEN_EXPIRATION_TIME)))
-                                .signWith(getSigningKey(SUPER_SECRET_KEY), SignatureAlgorithm.HS512).compact();
-                return "Bearer " + token;
+                                .signWith(getSigningKey(jwtSecret), SignatureAlgorithm.HS512).compact();
+                return TOKEN_BEARER_PREFIX + token;
         }
 
 }

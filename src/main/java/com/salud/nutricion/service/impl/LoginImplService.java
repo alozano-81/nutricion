@@ -66,8 +66,9 @@ public class LoginImplService implements LoginService {
             }
 
         } catch (Exception e) {
-            logger.error("VER MSN ERROR: ", e.getMessage());
+            logger.info(e.getMessage());
             out.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            out.setMsn(e.getMessage());
         }
         return out;
     }
