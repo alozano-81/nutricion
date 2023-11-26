@@ -61,9 +61,21 @@ public class UserController {
     }
 
     @PostMapping("creacion")
-    public ResponseEntity<Respuesta> crearUsuarios(@RequestBody UserDTO body) {
+    public ResponseEntity<Respuesta> crearUsuarios(@RequestBody UserDTO body,
+            @RequestHeader(value = "Authorization", required = true) String token) {
         Respuesta out = new Respuesta();
         try {
+            System.out.println("llega? " + body);
+            /*
+             * out = jwtUtil.procesarToken(token.contains("Bearer ") ? token.substring(7) :
+             * token);
+             * if (out.getStatus().equals(HttpStatus.CONFLICT)) {
+             * throw new ResponseStatusException(out.getStatus());
+             * } else {
+             * 
+             * }
+             */
+
             out = userService.crearNuevoUsuario(body);
             if (out.getStatus().equals(HttpStatus.UNAUTHORIZED)) {
                 throw new ResponseStatusException(out.getStatus());
