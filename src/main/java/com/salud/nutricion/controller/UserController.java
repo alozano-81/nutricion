@@ -27,6 +27,14 @@ public class UserController {
     @Autowired
     private JWTAuthorizationFilter jwtUtil;
 
+    @GetMapping("/get-all-roles")
+    public ResponseEntity<Respuesta> getAllPaises() {
+        // List<PaisesDTO> out = new ArrayList<>();
+        Respuesta out = new Respuesta();
+        out = userService.getListaRoles();
+        return new ResponseEntity<>(out, HttpStatus.ACCEPTED);
+    }
+
     @GetMapping("validar-sesion-test")
     public ResponseEntity<Respuesta> greetings(@RequestParam(value = "name", defaultValue = "World") String name,
             @RequestParam(value = "token") String token) {

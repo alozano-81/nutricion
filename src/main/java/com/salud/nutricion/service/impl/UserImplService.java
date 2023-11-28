@@ -1,13 +1,17 @@
 package com.salud.nutricion.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.salud.nutricion.dto.RolesDTO;
 import com.salud.nutricion.dto.UserDTO;
 import com.salud.nutricion.entities.ERole;
 import com.salud.nutricion.entities.RoleEntitieDocument;
@@ -29,6 +33,9 @@ public class UserImplService implements UserService {
 
     @Autowired
     PasswordEncoder encoder;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public Respuesta crearNuevoUsuario(UserDTO body) {
@@ -92,6 +99,21 @@ public class UserImplService implements UserService {
         userRepository.save(user);
         obj.setStatus(HttpStatus.ACCEPTED);
         return obj;
+    }
+
+    @Override
+    public Respuesta getListaRoles() {
+        Respuesta out = new Respuesta();
+        List<RolesDTO> lista = new ArrayList<>();
+        List<RoleEntitieDocument> listaRoles = roleRepository.findAll();
+        for (RoleEntitieDocument r : listaRoles) {
+            RolesDTO rol = new RolesDTO();
+            rol = modelMapper.map(r, RolesDTO.class);
+            lista.add(rol);
+        }
+        out.setObj(lista);
+        out.setStatus(HttpStatus.ACCEPTED);
+        return out;
     }
 
 }
