@@ -3,7 +3,6 @@ E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricio
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\service\impl\ResgistroPacientesImplService.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\respuestas\MessageResponse.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\security\jwt\JWTAuthorizationFilter.java
-E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\controller\ResgistroPacientes.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\repository\RoleRepository.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\service\impl\UserImplService.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\util\Constans.java
@@ -12,6 +11,7 @@ E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricio
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\respuestas\Respuesta.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\service\LoginService.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\controller\SecuredController.java
+E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\controller\PacientesController.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\dto\LoginDTO.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\repository\RegistroPacientesRepository.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\service\RegistroPacientesService.java
