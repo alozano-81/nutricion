@@ -80,8 +80,8 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException e) {
             logger.error("Invalid JWT token invalido: {}", e.getMessage());
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             response.sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
+            // response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             // return;
         }
     }

@@ -14,6 +14,7 @@ import com.salud.nutricion.entities.DocumentRegistroPacientes;
 import com.salud.nutricion.entities.PaisEntitieDocument;
 import com.salud.nutricion.repository.PaisesRepository;
 import com.salud.nutricion.repository.RegistroPacientesRepository;
+import com.salud.nutricion.respuestas.MessageResponse;
 import com.salud.nutricion.respuestas.Respuesta;
 import com.salud.nutricion.service.RegistroPacientesService;
 
@@ -81,20 +82,22 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
                     out.setStatus(HttpStatus.ACCEPTED);
                     out.setObj(respuesta);
                 } else {
+                    out.setMensaje(new MessageResponse("Error: al momento de ser creado"));
                     out.setStatus(HttpStatus.BAD_REQUEST);
                     out.setObj(respuesta);
                 }
 
             } else {
+                out.setMensaje(new MessageResponse("Error: Paciente existente!"));
                 out.setStatus(HttpStatus.FOUND);
                 out.setObj(buscarUnico);
             }
             System.out.println("ver rrr: " + out);
         } catch (Exception e) {
+            out.setMensaje(new MessageResponse("Error: " + e.getMessage()));
             out.setStatus(HttpStatus.BAD_REQUEST);
             out.setObj(formulario);
         }
-
         return out;
     }
 
