@@ -30,7 +30,6 @@ public class LoginControler {
         System.out.println("FEcha: " + x);
         try {
             out = loginService.validarCredenciales(usuario, password);
-
             if (out.getStatus().equals(HttpStatus.UNAUTHORIZED)) {
                 throw new ResponseStatusException(out.getStatus());
             }
@@ -38,7 +37,6 @@ public class LoginControler {
         } catch (Exception e) {
             return new ResponseEntity<>(out, HttpStatus.BAD_REQUEST);
         }
-
     }
 
 }
