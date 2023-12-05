@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.salud.nutricion.dto.UserDTO;
+import com.salud.nutricion.respuestas.MessageResponse;
 import com.salud.nutricion.respuestas.Respuesta;
 import com.salud.nutricion.security.jwt.JWTAuthorizationFilter;
 import com.salud.nutricion.service.UserService;
@@ -90,7 +91,8 @@ public class UserController {
             }
             return new ResponseEntity<>(out, out.getStatus());
         } catch (Exception e) {
-            return new ResponseEntity<>(out, out.getStatus());
+            out.setMensaje(new MessageResponse("Error: " + e.getMessage()));
+            return new ResponseEntity<>(out, out.getStatus() == null ? HttpStatus.FORBIDDEN : out.getStatus());
         }
 
     }
