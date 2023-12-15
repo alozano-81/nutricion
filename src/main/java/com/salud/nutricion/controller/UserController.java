@@ -97,4 +97,21 @@ public class UserController {
 
     }
 
+    @GetMapping("listar")
+    public ResponseEntity<Respuesta> listarUsuarios(
+            @RequestHeader(value = "Authorization", required = false) String token) {
+        Respuesta out = new Respuesta();
+        try {
+            out = userService.getAll();
+            if (out.getStatus().equals(HttpStatus.UNAUTHORIZED)) {
+                throw new ResponseStatusException(out.getStatus());
+            }
+            return new ResponseEntity<>(out, out.getStatus());
+        } catch (Exception e) {
+            out.setMensaje(new MessageResponse("Error: " + e.getMessage()));
+            return new ResponseEntity<>(out, out.getStatus() == null ? HttpStatus.FORBIDDEN : out.getStatus());
+        }
+
+    }
+
 }

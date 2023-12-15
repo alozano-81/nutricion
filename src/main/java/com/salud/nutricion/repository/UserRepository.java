@@ -1,5 +1,6 @@
 package com.salud.nutricion.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -21,4 +22,8 @@ public interface UserRepository extends MongoRepository<UserEntitieDocument, Str
 
     @Query("{username:'?0',password:'?1'}")
     UserEntitieDocument getLogin(String usuario, String password);
+
+    @Query(value = "{}")
+    List<UserEntitieDocument> getAll();
+
 }

@@ -116,4 +116,25 @@ public class UserImplService implements UserService {
         return out;
     }
 
+    @Override
+    public Respuesta getAll() {
+        Respuesta out = new Respuesta();
+        try {
+            List<UserDTO> lista = new ArrayList<>();
+            List<UserEntitieDocument> obj = userRepository.getAll();
+            for (UserEntitieDocument l : obj) {
+                UserDTO userDto = new UserDTO();
+                userDto = modelMapper.map(l, UserDTO.class);
+                lista.add(userDto);
+            }
+            out.setObj(lista);
+            out.setStatus(HttpStatus.ACCEPTED);
+            return out;
+        } catch (Exception e) {
+            out.setObj(null);
+            out.setStatus(HttpStatus.BAD_REQUEST);
+            return out;
+        }
+    }
+
 }
