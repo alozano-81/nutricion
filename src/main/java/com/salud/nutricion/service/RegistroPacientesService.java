@@ -15,8 +15,8 @@ public interface RegistroPacientesService {
 
     public List<PaisesDTO> getAllPaises();
 
-    public Respuesta registrarPacientes(RegistroPacientesDTO formulario);
+    public Respuesta registrarPacientes(RegistroPacientesDTO formulario, boolean tipoRegistro);
 
-    public DocumentRegistroPacientes buscarByCedula(Long id);
+    public DocumentRegistroPacientes buscarByCedula(Long documento, String id);
 
 }

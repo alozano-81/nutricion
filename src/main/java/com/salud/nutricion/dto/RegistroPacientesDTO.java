@@ -6,6 +6,8 @@ import lombok.Data;
 
 @Data
 public class RegistroPacientesDTO {
+    private String id;
+
     private String nombres;
 
     private String apellidos;

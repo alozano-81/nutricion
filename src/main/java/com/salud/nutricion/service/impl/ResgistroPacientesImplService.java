@@ -2,6 +2,7 @@ package com.salud.nutricion.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,14 +70,14 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
     }
 
     @Override
-    public Respuesta registrarPacientes(RegistroPacientesDTO formulario) {
+    public Respuesta registrarPacientes(RegistroPacientesDTO formulario, boolean tipoRegistro) {
         Respuesta out = new Respuesta();
         try {
             DocumentRegistroPacientes obj = new DocumentRegistroPacientes();
             obj = modelMapper.map(formulario, DocumentRegistroPacientes.class);
 
-            DocumentRegistroPacientes buscarUnico = buscarByCedula(obj.getDocumento());
-            if (buscarUnico == null) {
+            DocumentRegistroPacientes buscarUnico = buscarByCedula(obj.getDocumento(), obj.getId());
+            if (buscarUnico == null && tipoRegistro) {
                 DocumentRegistroPacientes respuesta = documentoRepository.save(obj);
                 if (respuesta != null) {
                     out.setStatus(HttpStatus.ACCEPTED);
@@ -88,9 +89,28 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
                 }
 
             } else {
-                out.setMensaje(new MessageResponse("Error: Paciente existente!"));
-                out.setStatus(HttpStatus.FOUND);
-                out.setObj(buscarUnico);
+                if (tipoRegistro) {
+                    Optional<DocumentRegistroPacientes> verifica = documentoRepository.getById(obj.getDocumento());
+                    // obj.setId(verifica.get().getId());
+                    DocumentRegistroPacientes respuesta = null;
+                    if (verifica.isPresent()) {
+                        respuesta = documentoRepository.save(obj);
+                        // System.out.println("===> " + verifica.get().se);
+                        out.setMensaje(new MessageResponse("ok: Paciente actualizado correctamente!"));
+                        out.setStatus(HttpStatus.ACCEPTED);
+                        out.setObj(respuesta);
+                    } else {
+                        out.setMensaje(new MessageResponse("Error: No es posible actualizar el documento!"));
+                        out.setStatus(HttpStatus.CONFLICT);
+                        out.setObj(respuesta);
+                    }
+
+                } else {
+                    out.setMensaje(new MessageResponse("Error: No es posible modificar el documento!"));
+                    out.setStatus(HttpStatus.FOUND);
+                    out.setObj(buscarUnico);
+                }
+
             }
             System.out.println("ver rrr: " + out);
         } catch (Exception e) {
@@ -102,11 +122,19 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
     }
 
     @Override
-    public DocumentRegistroPacientes buscarByCedula(Long id) {
-        DocumentRegistroPacientes out = new DocumentRegistroPacientes();
-        out = documentoRepository.getById(id);
-        System.out.println("Salida: " + out);
-        return out;
+    public DocumentRegistroPacientes buscarByCedula(Long documento, String id) {
+        DocumentRegistroPacientes out = null;
+        try {
+            Optional<DocumentRegistroPacientes> out2 = documentoRepository.getById(documento, id);
+            System.out.println("Salida: " + out2);
+            if (out2.isPresent()) {
+                out = out2.get();
+            }
+            return out;
+        } catch (Exception e) {
+            // TODO: handle exception
+            return out;
+        }
     }
 
 }
