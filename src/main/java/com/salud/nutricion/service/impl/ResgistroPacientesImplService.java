@@ -137,4 +137,31 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
         }
     }
 
+    @Override
+    public Respuesta deletePaciente(RegistroPacientesDTO formulario) {
+        Respuesta out = new Respuesta();
+        try {
+            DocumentRegistroPacientes respuesta = null;
+            DocumentRegistroPacientes obj = new DocumentRegistroPacientes();
+            obj = modelMapper.map(formulario, DocumentRegistroPacientes.class);
+            Optional<DocumentRegistroPacientes> searchObj = documentoRepository.findById(obj.getId());
+            if (searchObj.isPresent()) {
+                documentoRepository.delete(obj);
+                out.setMensaje(new MessageResponse("ok: Paciente eliminado correctamente!"));
+                out.setStatus(HttpStatus.ACCEPTED);
+                out.setObj(respuesta);
+            } else {
+                out.setMensaje(new MessageResponse("Error: No es posible eliminar el documento!"));
+                out.setStatus(HttpStatus.CONFLICT);
+                out.setObj(respuesta);
+            }
+        } catch (Exception e) {
+            out.setMensaje(new MessageResponse("Error: " + e.getMessage()));
+            out.setStatus(HttpStatus.BAD_REQUEST);
+            out.setObj(formulario);
+        }
+
+        return out;
+    }
+
 }

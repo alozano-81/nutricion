@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -83,6 +84,22 @@ public class PacientesController {
         try {
             System.out.println("ver body actualizar" + formularioRegistro);
             out = registroPacientesService.registrarPacientes(formularioRegistro, true);
+            if (out.getStatus().equals(HttpStatus.BAD_REQUEST)) {
+                throw new ResponseStatusException(out.getStatus());
+            }
+            return new ResponseEntity<>(out, out.getStatus());
+        } catch (Exception e) {
+            return new ResponseEntity<>(out, out.getStatus());
+        }
+    }
+
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity<Respuesta> deletePaciente(
+            @RequestHeader(value = "Authorization", required = true) String token,
+            @RequestBody RegistroPacientesDTO formularioRegistro) {
+        Respuesta out = new Respuesta();
+        try {
+            out = registroPacientesService.deletePaciente(formularioRegistro);
             if (out.getStatus().equals(HttpStatus.BAD_REQUEST)) {
                 throw new ResponseStatusException(out.getStatus());
             }

@@ -17,6 +17,8 @@ public interface RegistroPacientesService {
 
     public Respuesta registrarPacientes(RegistroPacientesDTO formulario, boolean tipoRegistro);
 
+    public Respuesta deletePaciente(RegistroPacientesDTO formulario);
+
     public DocumentRegistroPacientes buscarByCedula(Long documento, String id);
 
 }
