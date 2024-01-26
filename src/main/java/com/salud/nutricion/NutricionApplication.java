@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-@ComponentScan({ "com.salud.nutricion.service" })
+@ComponentScan({ "com.salud.nutricion.service", "com.salud.nutricion.security.jwt" })
 @EnableAutoConfiguration
 @EnableMongoRepositories(basePackages = { "com.salud.nutricion.repository" })
 public class NutricionApplication {

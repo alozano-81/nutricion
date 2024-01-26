@@ -9,4 +9,7 @@ public interface LoginRepository extends MongoRepository<LoginEntitieDocument, S
 
     @Query("{user:'?0',password:'?1'}")
     LoginEntitieDocument getLogin(String usuario, String password);
+
+    @Query("{user:'?0'}")
+    LoginEntitieDocument getPassEncode(String usuario);
 }
