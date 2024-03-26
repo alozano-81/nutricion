@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.salud.nutricion.dto.EstadosCivilDTO;
 import com.salud.nutricion.dto.PaisesDTO;
 import com.salud.nutricion.dto.RegistroPacientesDTO;
 import com.salud.nutricion.respuestas.Respuesta;
@@ -55,6 +56,13 @@ public class PacientesController {
         System.out.println("llega");
 
         // return new ResponseEntity<>("OKK", HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(out, HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/get-all-estados-civil")
+    public ResponseEntity<List<EstadosCivilDTO>> getAllEstadoscivil() {
+        List<EstadosCivilDTO> out = new ArrayList<>();
+        out = registroPacientesService.getAllCiviles();
         return new ResponseEntity<>(out, HttpStatus.ACCEPTED);
     }
 

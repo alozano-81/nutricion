@@ -1,3 +1,4 @@
+E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\dto\EstadosCivilDTO.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\entities\ERole.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\entities\DocumentRegistroPacientes.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\service\impl\ResgistroPacientesImplService.java
@@ -21,8 +22,10 @@ E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricio
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\repository\LoginRepository.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\NutricionApplication.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\security\jwt\JWTAuthtenticationConfig.java
+E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\repository\EstadoCivilRepository.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\entities\RoleEntitieDocument.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\entities\UserEntitieDocument.java
+E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\entities\EstadosCivilEntitieDocument.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\entities\PaisEntitieDocument.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\security\jwt\WebSecurityConfig.java
 E:\proyectosVarios\proyecto_nutricion\nutricion\src\main\java\com\salud\nutricion\dto\UserDTO.java

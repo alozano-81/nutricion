@@ -2,6 +2,7 @@ package com.salud.nutricion.service;
 
 import java.util.List;
 
+import com.salud.nutricion.dto.EstadosCivilDTO;
 import com.salud.nutricion.dto.PaisesDTO;
 import com.salud.nutricion.dto.RegistroPacientesDTO;
 import com.salud.nutricion.entities.DocumentRegistroPacientes;
@@ -14,6 +15,8 @@ public interface RegistroPacientesService {
     public List<RegistroPacientesDTO> getAll();
 
     public List<PaisesDTO> getAllPaises();
+
+    public List<EstadosCivilDTO> getAllCiviles();
 
     public Respuesta registrarPacientes(RegistroPacientesDTO formulario, boolean tipoRegistro);
 

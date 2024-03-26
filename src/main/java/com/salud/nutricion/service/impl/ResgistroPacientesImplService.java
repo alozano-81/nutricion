@@ -9,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.salud.nutricion.dto.EstadosCivilDTO;
 import com.salud.nutricion.dto.PaisesDTO;
 import com.salud.nutricion.dto.RegistroPacientesDTO;
 import com.salud.nutricion.entities.DocumentRegistroPacientes;
+import com.salud.nutricion.entities.EstadosCivilEntitieDocument;
 import com.salud.nutricion.entities.PaisEntitieDocument;
+import com.salud.nutricion.repository.EstadoCivilRepository;
 import com.salud.nutricion.repository.PaisesRepository;
 import com.salud.nutricion.repository.RegistroPacientesRepository;
 import com.salud.nutricion.respuestas.MessageResponse;
@@ -27,6 +30,9 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
 
     @Autowired
     PaisesRepository paisesRepository;
+
+    @Autowired
+    EstadoCivilRepository estadoCivilRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -161,6 +167,18 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
             out.setObj(formulario);
         }
 
+        return out;
+    }
+
+    @Override
+    public List<EstadosCivilDTO> getAllCiviles() {
+        List<EstadosCivilDTO> out = new ArrayList<>();
+        List<EstadosCivilEntitieDocument> list = estadoCivilRepository.getTodos();
+        for (EstadosCivilEntitieDocument p : list) {
+            EstadosCivilDTO rp = new EstadosCivilDTO();
+            rp = modelMapper.map(p, EstadosCivilDTO.class);
+            out.add(rp);
+        }
         return out;
     }
 
