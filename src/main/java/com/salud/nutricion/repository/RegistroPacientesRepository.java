@@ -1,6 +1,7 @@
 package com.salud.nutricion.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
@@ -18,6 +19,9 @@ public interface RegistroPacientesRepository extends MongoRepository<DocumentReg
     List<DocumentRegistroPacientes> getTodos();
 
     @Query("{documento: ?0}")
-    DocumentRegistroPacientes getById(Long id);
+    Optional<DocumentRegistroPacientes> getById(Long doc);
+
+    @Query("{documento: ?0, id: ?1}")
+    Optional<DocumentRegistroPacientes> getById(Long doc, String id);
 
 }

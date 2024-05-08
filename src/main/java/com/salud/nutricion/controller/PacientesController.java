@@ -6,21 +6,25 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.salud.nutricion.dto.EstadosCivilDTO;
 import com.salud.nutricion.dto.PaisesDTO;
 import com.salud.nutricion.dto.RegistroPacientesDTO;
 import com.salud.nutricion.respuestas.Respuesta;
 import com.salud.nutricion.service.RegistroPacientesService;
 
 @RestController
-@RequestMapping("api/paciente")
-public class ResgistroPacientes {
+@RequestMapping("api/auth/paciente")
+public class PacientesController {
 
     @Autowired
     RegistroPacientesService registroPacientesService;
@@ -55,12 +59,23 @@ public class ResgistroPacientes {
         return new ResponseEntity<>(out, HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/get-all-estados-civil")
+    public ResponseEntity<List<EstadosCivilDTO>> getAllEstadoscivil() {
+        List<EstadosCivilDTO> out = new ArrayList<>();
+        out = registroPacientesService.getAllCiviles();
+        return new ResponseEntity<>(out, HttpStatus.ACCEPTED);
+    }
+
+    /**
+     * Registrar pacientes
+     */
     @PostMapping(value = "/registrar")
-    public ResponseEntity<Respuesta> registrarPacientes(@RequestBody RegistroPacientesDTO formularioRegistro) {
+    public ResponseEntity<Respuesta> registrarPacientes(@RequestBody RegistroPacientesDTO formularioRegistro,
+            @RequestHeader(value = "Authorization", required = true) String token) {
         Respuesta out = new Respuesta();
         try {
             System.out.println("ver body" + formularioRegistro);
-            out = registroPacientesService.registrarPacientes(formularioRegistro);
+            out = registroPacientesService.registrarPacientes(formularioRegistro, false);
             if (out.getStatus().equals(HttpStatus.BAD_REQUEST)) {
                 throw new ResponseStatusException(out.getStatus());
             }
@@ -68,7 +83,38 @@ public class ResgistroPacientes {
         } catch (Exception e) {
             return new ResponseEntity<>(out, out.getStatus());
         }
+    }
 
+    @PutMapping(value = "/actualizar")
+    public ResponseEntity<Respuesta> actualizarPacientes(@RequestBody RegistroPacientesDTO formularioRegistro,
+            @RequestHeader(value = "Authorization", required = true) String token) {
+        Respuesta out = new Respuesta();
+        try {
+            System.out.println("ver body actualizar" + formularioRegistro);
+            out = registroPacientesService.registrarPacientes(formularioRegistro, true);
+            if (out.getStatus().equals(HttpStatus.BAD_REQUEST)) {
+                throw new ResponseStatusException(out.getStatus());
+            }
+            return new ResponseEntity<>(out, out.getStatus());
+        } catch (Exception e) {
+            return new ResponseEntity<>(out, out.getStatus());
+        }
+    }
+
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity<Respuesta> deletePaciente(
+            @RequestHeader(value = "Authorization", required = true) String token,
+            @RequestBody RegistroPacientesDTO formularioRegistro) {
+        Respuesta out = new Respuesta();
+        try {
+            out = registroPacientesService.deletePaciente(formularioRegistro);
+            if (out.getStatus().equals(HttpStatus.BAD_REQUEST)) {
+                throw new ResponseStatusException(out.getStatus());
+            }
+            return new ResponseEntity<>(out, out.getStatus());
+        } catch (Exception e) {
+            return new ResponseEntity<>(out, out.getStatus());
+        }
     }
 
 }
