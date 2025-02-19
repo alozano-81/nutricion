@@ -125,12 +125,14 @@ public class PacientesController {
      * @return
      */
     @PostMapping("/registrarInfoPaciente")
-    public ResponseEntity<Respuesta> ingresarInformacionPacienteRegistrado(@RequestBody RegistroInfoPacientesDTO formularioRegistroInfoPacientes,
-    @RequestHeader(value = "Authorization", required = true) String token) {
+    public ResponseEntity<Respuesta> ingresarInformacionPacienteRegistrado(
+            @RequestBody RegistroInfoPacientesDTO formularioRegistroInfoPacientes,
+            @RequestHeader(value = "Authorization", required = true) String token) {
         Respuesta out = new Respuesta();
         out.setStatus(HttpStatus.ACCEPTED);
         try {
             System.out.println("Ver api: " + formularioRegistroInfoPacientes);
+            out = registroPacientesService.registrarInfoPacientes(formularioRegistroInfoPacientes, false);
             if (out.getStatus().equals(HttpStatus.BAD_REQUEST)) {
                 throw new ResponseStatusException(out.getStatus());
             }
@@ -139,6 +141,5 @@ public class PacientesController {
             return new ResponseEntity<>(out, out.getStatus());
         }
     }
-    
 
 }

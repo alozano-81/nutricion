@@ -1,6 +1,7 @@
 D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\entities\EstadosCivilEntitieDocument.java
 D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\entities\PaisEntitieDocument.java
 D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\dto\PaisesDTO.java
+D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\repository\RegistroInfoPacientesRepository.java
 D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\service\UserService.java
 D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\util\Constans.java
 D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\controller\PacientesController.java
@@ -10,11 +11,13 @@ D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\c
 D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\respuestas\Respuesta.java
 D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\entities\DocumentRegistroPacientes.java
 D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\controller\LoginControler.java
+D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\dto\RegistroInfoPacientesDTO.java
 D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\service\RegistroPacientesService.java
 D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\repository\RoleRepository.java
 D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\repository\LoginRepository.java
 D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\service\impl\LoginImplService.java
 D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\entities\LoginEntitieDocument.java
+D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\entities\RegistroInfoPacientesDocument.java
 D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\service\impl\UserImplService.java
 D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\security\jwt\JWTAuthtenticationConfig.java
 D:\Users\alozano\Desktop\proyectos\proyectos_nutricion\nutricion\src\main\java\com\salud\nutricion\security\jwt\WebSecurityConfig.java

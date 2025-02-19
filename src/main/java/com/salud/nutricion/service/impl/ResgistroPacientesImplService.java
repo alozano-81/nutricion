@@ -32,7 +32,7 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
     RegistroPacientesRepository documentoRepository;
 
     @Autowired
-    RegistroInfoPacientesRepository registroInfoPacientesRepository ;
+    RegistroInfoPacientesRepository registroInfoPacientesRepository;
 
     @Autowired
     PaisesRepository paisesRepository;
@@ -89,7 +89,11 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
             obj = modelMapper.map(formulario, DocumentRegistroPacientes.class);
 
             DocumentRegistroPacientes buscarUnico = buscarByCedula(obj.getDocumento(), obj.getId());
-            if (buscarUnico == null && tipoRegistro) {
+            /*
+             * Verifica si el documento ingresado no existe y la variable tipo registro
+             * indica FALSE, entonces procede a hacer el registro nuevo.
+             */
+            if (buscarUnico == null && !tipoRegistro) {
                 DocumentRegistroPacientes respuesta = documentoRepository.save(obj);
                 if (respuesta != null) {
                     out.setStatus(HttpStatus.ACCEPTED);
@@ -209,7 +213,8 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
 
             } else {
                 if (tipoRegistro) {
-                    Optional<RegistroInfoPacientesDocument> verifica = registroInfoPacientesRepository.getById(obj.getIdPaciente());
+                    Optional<RegistroInfoPacientesDocument> verifica = registroInfoPacientesRepository
+                            .getById(obj.getIdPaciente());
                     // obj.setId(verifica.get().getId());
                     RegistroInfoPacientesDocument respuesta = null;
                     if (verifica.isPresent()) {
