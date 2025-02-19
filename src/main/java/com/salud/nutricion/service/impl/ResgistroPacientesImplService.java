@@ -11,12 +11,15 @@ import org.springframework.stereotype.Service;
 
 import com.salud.nutricion.dto.EstadosCivilDTO;
 import com.salud.nutricion.dto.PaisesDTO;
+import com.salud.nutricion.dto.RegistroInfoPacientesDTO;
 import com.salud.nutricion.dto.RegistroPacientesDTO;
 import com.salud.nutricion.entities.DocumentRegistroPacientes;
 import com.salud.nutricion.entities.EstadosCivilEntitieDocument;
 import com.salud.nutricion.entities.PaisEntitieDocument;
+import com.salud.nutricion.entities.RegistroInfoPacientesDocument;
 import com.salud.nutricion.repository.EstadoCivilRepository;
 import com.salud.nutricion.repository.PaisesRepository;
+import com.salud.nutricion.repository.RegistroInfoPacientesRepository;
 import com.salud.nutricion.repository.RegistroPacientesRepository;
 import com.salud.nutricion.respuestas.MessageResponse;
 import com.salud.nutricion.respuestas.Respuesta;
@@ -27,6 +30,9 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
 
     @Autowired
     RegistroPacientesRepository documentoRepository;
+
+    @Autowired
+    RegistroInfoPacientesRepository registroInfoPacientesRepository ;
 
     @Autowired
     PaisesRepository paisesRepository;
@@ -178,6 +184,58 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
             EstadosCivilDTO rp = new EstadosCivilDTO();
             rp = modelMapper.map(p, EstadosCivilDTO.class);
             out.add(rp);
+        }
+        return out;
+    }
+
+    @Override
+    public Respuesta registrarInfoPacientes(RegistroInfoPacientesDTO formulario, boolean tipoRegistro) {
+        Respuesta out = new Respuesta();
+        try {
+            RegistroInfoPacientesDocument obj = new RegistroInfoPacientesDocument();
+            obj = modelMapper.map(formulario, RegistroInfoPacientesDocument.class);
+
+            DocumentRegistroPacientes buscarUnico = buscarByCedula(obj.getIdPaciente(), obj.getId());
+            if (buscarUnico == null && tipoRegistro) {
+                RegistroInfoPacientesDocument respuesta = registroInfoPacientesRepository.save(obj);
+                if (respuesta != null) {
+                    out.setStatus(HttpStatus.ACCEPTED);
+                    out.setObj(respuesta);
+                } else {
+                    out.setMensaje(new MessageResponse("Error: al momento de ser creado"));
+                    out.setStatus(HttpStatus.BAD_REQUEST);
+                    out.setObj(respuesta);
+                }
+
+            } else {
+                if (tipoRegistro) {
+                    Optional<RegistroInfoPacientesDocument> verifica = registroInfoPacientesRepository.getById(obj.getIdPaciente());
+                    // obj.setId(verifica.get().getId());
+                    RegistroInfoPacientesDocument respuesta = null;
+                    if (verifica.isPresent()) {
+                        respuesta = registroInfoPacientesRepository.save(obj);
+                        // System.out.println("===> " + verifica.get().se);
+                        out.setMensaje(new MessageResponse("ok: Paciente actualizado correctamente!"));
+                        out.setStatus(HttpStatus.ACCEPTED);
+                        out.setObj(respuesta);
+                    } else {
+                        out.setMensaje(new MessageResponse("Error: No es posible actualizar el documento!"));
+                        out.setStatus(HttpStatus.CONFLICT);
+                        out.setObj(respuesta);
+                    }
+
+                } else {
+                    out.setMensaje(new MessageResponse("Error: No es posible modificar el documento!"));
+                    out.setStatus(HttpStatus.FOUND);
+                    out.setObj(buscarUnico);
+                }
+
+            }
+            System.out.println("ver rrr: " + out);
+        } catch (Exception e) {
+            out.setMensaje(new MessageResponse("Error: " + e.getMessage()));
+            out.setStatus(HttpStatus.BAD_REQUEST);
+            out.setObj(formulario);
         }
         return out;
     }

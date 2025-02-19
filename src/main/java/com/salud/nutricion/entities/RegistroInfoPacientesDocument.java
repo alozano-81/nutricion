@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @Document("infoPaciente")
-public class DocumentRegistroInfoPacientesDocument {
+public class RegistroInfoPacientesDocument {
 
     @Id
     private String id;
