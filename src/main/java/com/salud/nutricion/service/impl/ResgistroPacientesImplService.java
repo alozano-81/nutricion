@@ -200,7 +200,7 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
             obj = modelMapper.map(formulario, RegistroInfoPacientesDocument.class);
 
             DocumentRegistroPacientes buscarUnico = buscarByCedula(obj.getIdPaciente(), obj.getId());
-            if (buscarUnico == null && tipoRegistro) {
+            if (buscarUnico == null && !tipoRegistro) {
                 RegistroInfoPacientesDocument respuesta = registroInfoPacientesRepository.save(obj);
                 if (respuesta != null) {
                     out.setStatus(HttpStatus.ACCEPTED);
