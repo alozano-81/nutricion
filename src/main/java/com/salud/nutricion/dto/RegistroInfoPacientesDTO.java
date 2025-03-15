@@ -13,5 +13,5 @@ public class RegistroInfoPacientesDTO implements Serializable {
     private String id;
     private Long idPaciente;
     private String motivo;
-    private List<Object> varios;
+    private List<InfoPacientesDTO> varios;
 }
