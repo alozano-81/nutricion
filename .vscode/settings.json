@@ -1,4 +1,5 @@
 {
     "svn.ignoreMissingSvnWarning": true,
-    "java.debug.settings.onBuildFailureProceed": true
+    "java.debug.settings.onBuildFailureProceed": true,
+    "java.jdt.ls.java.home": ""
 }

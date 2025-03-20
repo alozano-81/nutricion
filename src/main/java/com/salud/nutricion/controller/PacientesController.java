@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.salud.nutricion.dto.EstadosCivilDTO;
 import com.salud.nutricion.dto.PaisesDTO;
+import com.salud.nutricion.dto.RegistroInfoPacientesDTO;
 import com.salud.nutricion.dto.RegistroPacientesDTO;
 import com.salud.nutricion.respuestas.Respuesta;
 import com.salud.nutricion.service.RegistroPacientesService;
@@ -108,6 +109,31 @@ public class PacientesController {
         Respuesta out = new Respuesta();
         try {
             out = registroPacientesService.deletePaciente(formularioRegistro);
+            if (out.getStatus().equals(HttpStatus.BAD_REQUEST)) {
+                throw new ResponseStatusException(out.getStatus());
+            }
+            return new ResponseEntity<>(out, out.getStatus());
+        } catch (Exception e) {
+            return new ResponseEntity<>(out, out.getStatus());
+        }
+    }
+
+    /**
+     * 
+     * @param formularioRegistroInfoPacientes
+     * @param token
+     * @return
+     */
+    @PostMapping("/registrarInfoPaciente")
+    public ResponseEntity<Respuesta> ingresarInformacionPacienteRegistrado(
+            @RequestBody RegistroInfoPacientesDTO formularioRegistroInfoPacientes,
+            @RequestHeader(value = "Authorization", required = true) String token) {
+        Respuesta out = new Respuesta();
+        out.setStatus(HttpStatus.ACCEPTED);
+        try {
+            System.out.println(
+                    "Ver api: " + formularioRegistroInfoPacientes.getVarios().get(0).getAntecedentesFamiliares());
+            out = registroPacientesService.registrarInfoPacientes(formularioRegistroInfoPacientes, false);
             if (out.getStatus().equals(HttpStatus.BAD_REQUEST)) {
                 throw new ResponseStatusException(out.getStatus());
             }

@@ -8,7 +8,6 @@ com\salud\nutricion\dto\PaisesDTO.class
 com\salud\nutricion\dto\RegistroPacientesDTO.class
 com\salud\nutricion\respuestas\Respuesta.class
 com\salud\nutricion\security\jwt\WebSecurityConfig.class
-application.properties
 com\salud\nutricion\NutricionApplication$1.class
 com\salud\nutricion\repository\RoleRepository.class
 com\salud\nutricion\service\impl\ResgistroPacientesImplService.class
@@ -18,6 +17,7 @@ com\salud\nutricion\entities\RoleEntitieDocument.class
 com\salud\nutricion\respuestas\MessageResponse.class
 com\salud\nutricion\dto\LoginDTO.class
 com\salud\nutricion\entities\PaisEntitieDocument.class
+com\salud\nutricion\repository\RegistroInfoPacientesRepository.class
 com\salud\nutricion\dto\EstadosCivilDTO.class
 com\salud\nutricion\service\impl\UserImplService.class
 com\salud\nutricion\controller\UserController.class
@@ -28,7 +28,9 @@ com\salud\nutricion\security\jwt\JWTAuthorizationFilter.class
 com\salud\nutricion\dto\UserDTO.class
 com\salud\nutricion\NutricionApplication.class
 com\salud\nutricion\entities\UserEntitieDocument.class
+com\salud\nutricion\dto\RegistroInfoPacientesDTO.class
 com\salud\nutricion\controller\PacientesController.class
+com\salud\nutricion\entities\RegistroInfoPacientesDocument.class
 com\salud\nutricion\entities\LoginEntitieDocument.class
 com\salud\nutricion\service\impl\LoginImplService.class
 com\salud\nutricion\repository\LoginRepository.class
