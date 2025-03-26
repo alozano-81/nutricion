@@ -212,6 +212,7 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
                 }
 
             } else {
+                System.out.println("ESTA UPDATED");
                 if (tipoRegistro) {
                     Optional<RegistroInfoPacientesDocument> verifica = registroInfoPacientesRepository
                             .getById(obj.getIdPaciente());
@@ -219,7 +220,7 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
                     RegistroInfoPacientesDocument respuesta = null;
                     if (verifica.isPresent()) {
                         respuesta = registroInfoPacientesRepository.save(obj);
-                        // System.out.println("===> " + verifica.get().se);
+
                         out.setMensaje(new MessageResponse("ok: Paciente actualizado correctamente!"));
                         out.setStatus(HttpStatus.ACCEPTED);
                         out.setObj(respuesta);

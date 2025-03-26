@@ -26,7 +26,7 @@ public class NutricionApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")//
-						.allowedOrigins("*")//
+						.allowedOrigins("*", "https://fm2qmwd4-8083.use2.devtunnels.ms/")//
 						.allowedMethods("OPTIONS", "HEAD", "GET", "PUT", "POST", "DELETE", "PATCH")//
 						.allowedHeaders("*");
 			}

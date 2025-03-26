@@ -131,8 +131,8 @@ public class PacientesController {
         Respuesta out = new Respuesta();
         out.setStatus(HttpStatus.ACCEPTED);
         try {
-            System.out.println(
-                    "Ver api: " + formularioRegistroInfoPacientes.getVarios().get(0).getAntecedentesFamiliares());
+            System.out.println("Ver api llega de front: "
+                    + formularioRegistroInfoPacientes.getVarios().get(0).getAntecedentesFamiliares());
             out = registroPacientesService.registrarInfoPacientes(formularioRegistroInfoPacientes, false);
             if (out.getStatus().equals(HttpStatus.BAD_REQUEST)) {
                 throw new ResponseStatusException(out.getStatus());
