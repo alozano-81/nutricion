@@ -141,7 +141,7 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
     public DocumentRegistroPacientes buscarByCedula(Long documento, String id) {
         DocumentRegistroPacientes out = null;
         try {
-            Optional<DocumentRegistroPacientes> out2 = documentoRepository.getById(documento, id);
+            Optional<DocumentRegistroPacientes> out2 = documentoRepository.getById(documento);
             System.out.println("Salida: " + out2);
             if (out2.isPresent()) {
                 out = out2.get();
@@ -203,6 +203,7 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
             if (buscarUnico == null && !tipoRegistro) {
                 RegistroInfoPacientesDocument respuesta = registroInfoPacientesRepository.save(obj);
                 if (respuesta != null) {
+                    out.setMensaje(new MessageResponse("Registro actualizado"));
                     out.setStatus(HttpStatus.ACCEPTED);
                     out.setObj(respuesta);
                 } else {
@@ -213,13 +214,16 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
 
             } else {
                 System.out.println("ESTA UPDATED");
-                if (tipoRegistro) {
+                if (!tipoRegistro) {
                     Optional<RegistroInfoPacientesDocument> verifica = registroInfoPacientesRepository
                             .getById(obj.getIdPaciente());
-                    // obj.setId(verifica.get().getId());
+
                     RegistroInfoPacientesDocument respuesta = null;
                     if (verifica.isPresent()) {
+                        System.out.println("=======>>" + obj.getVarios().get(0));
+                        // for(RegistroInfoPacientesDocument reg : obj){
                         respuesta = registroInfoPacientesRepository.save(obj);
+                        // }
 
                         out.setMensaje(new MessageResponse("ok: Paciente actualizado correctamente!"));
                         out.setStatus(HttpStatus.ACCEPTED);

@@ -1,7 +1,11 @@
 package com.salud.nutricion.entities;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.salud.nutricion.dto.InfoPacientesDTO;
 
 import lombok.Data;
 
@@ -16,6 +20,6 @@ public class RegistroInfoPacientesDocument {
 
     private String motivo;
 
-    private String varios;
+    private List<InfoPacientesDTO> varios;
 
 }
