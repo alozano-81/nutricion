@@ -31,4 +31,6 @@ public class RegistroPacientesDTO {
     private Long telefono;
 
     private String email;
+
+    private RegistroInfoPacientesDTO infoPaciente;
 }

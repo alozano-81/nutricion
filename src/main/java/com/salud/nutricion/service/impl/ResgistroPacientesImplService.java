@@ -32,6 +32,9 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
     RegistroPacientesRepository documentoRepository;
 
     @Autowired
+    RegistroInfoPacientesRepository dInfoPacientesRepository;
+
+    @Autowired
     RegistroInfoPacientesRepository registroInfoPacientesRepository;
 
     @Autowired
@@ -59,13 +62,26 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
     public List<RegistroPacientesDTO> getAll() {
         List<RegistroPacientesDTO> out = new ArrayList<>();
         List<DocumentRegistroPacientes> list = documentoRepository.getTodos();
-        System.out.println("VER: " + list);
+        List<RegistroInfoPacientesDocument> listInfo = new ArrayList<>();
+
         for (DocumentRegistroPacientes p : list) {
+            System.out.println("VERINFO: " + p.getDocumento());
             RegistroPacientesDTO rp = new RegistroPacientesDTO();
             rp = modelMapper.map(p, RegistroPacientesDTO.class);
+            rp.setInfoPaciente(getListInfoPacienteVarios(p.getDocumento()));
+
             out.add(rp);
         }
         return out;
+    }
+
+    public RegistroInfoPacientesDTO getListInfoPacienteVarios(Long documentoId) {
+        RegistroInfoPacientesDTO info = new RegistroInfoPacientesDTO();
+        Optional<RegistroInfoPacientesDocument> getAllXDocumentoInfoPaciente = dInfoPacientesRepository
+                .getById(documentoId);
+        info = modelMapper.map(getAllXDocumentoInfoPaciente, RegistroInfoPacientesDTO.class);
+        System.out.println("List:===>>>" + getAllXDocumentoInfoPaciente);
+        return getAllXDocumentoInfoPaciente.isPresent() ? info : null;
     }
 
     @Override
@@ -248,6 +264,12 @@ public class ResgistroPacientesImplService implements RegistroPacientesService {
             out.setObj(formulario);
         }
         return out;
+    }
+
+    @Override
+    public Respuesta getAllInfoPacientes() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAllInfoPacientes'");
     }
 
 }

@@ -24,4 +24,7 @@ public interface RegistroInfoPacientesRepository extends MongoRepository<Registr
     @Query("{idPaciente: ?0, id: ?1}")
     Optional<RegistroInfoPacientesDocument> getById(Long doc, String id);
 
+    @Query("{idPaciente: ?0}")
+    List<RegistroInfoPacientesDocument> getAllById(Long doc);
+
 }

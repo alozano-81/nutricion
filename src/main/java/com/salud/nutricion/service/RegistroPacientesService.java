@@ -27,4 +27,6 @@ public interface RegistroPacientesService {
 
     public Respuesta registrarInfoPacientes(RegistroInfoPacientesDTO formulario, boolean tipoRegistro);
 
+    public Respuesta getAllInfoPacientes();
+
 }
